@@ -1,4 +1,4 @@
-import type { MetaFunction } from "@remix-run/node";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -7,6 +7,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { withSentry } from "@sentry/remix";
+import css from "~/app.css"
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -14,7 +16,11 @@ export const meta: MetaFunction = () => ({
   viewport: "width=device-width,initial-scale=1",
 });
 
-export default function App() {
+export const links: LinksFunction = () => [
+   {"rel": "stylesheet", href: css}
+]
+
+function App() {
   return (
     <html lang="en">
       <head>
@@ -30,3 +36,5 @@ export default function App() {
     </html>
   );
 }
+
+export default withSentry(App);
